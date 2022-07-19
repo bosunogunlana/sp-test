@@ -17,12 +17,12 @@ RSpec.describe Presenters::DefaultPresenter do
     end
   end
 
-  it 'pretty print page visits' do
+  it 'pretty prints page visits' do
     page_name, visit_details = transformed_log_entry.to_a.first
     expect(described_class.send(:pretty_print, page_name, visit_details, :all)).to eq('/home 78 visits')
   end
 
-  it 'pretty print unique views' do
+  it 'pretty prints unique views' do
     page_name, visit_details = transformed_log_entry.to_a.first
     expect(described_class.send(:pretty_print, page_name, visit_details, :unique)).to eq('/home 2 unique views')
   end

@@ -25,19 +25,19 @@ describe Transformers::DefaultTransformer do
   end
 
   describe '.call' do
-    it 'return transformed log' do
+    it 'returns transformed log' do
       transformed_log = described_class.call(log_file)
       expect(transformed_log['/contact'][:visit_counts]).to eq(3)
       expect(transformed_log['/contact'][:visitors_ip]).to eq(Set['184.123.665.067', '543.910.244.929'])
     end
 
-    it 'sort transformed logs by all page visits in descending order' do
+    it 'sorts transformed logs by all page visits in descending order' do
       transformed_log = described_class.call(log_file, type: :all)
       expect(transformed_log.to_a).to eq(all_processed_log)
       expect(transformed_log.first.first).to eq('/help_page/1')
     end
 
-    it 'sort transformed logs by unique page visits in descending order' do
+    it 'sorts transformed logs by unique page visits in descending order' do
       transformed_log = described_class.call(log_file, type: :unique)
       expect(transformed_log.to_a).to eq(unique_processed_log)
       expect(transformed_log.first.first).to eq('/help_page/1')
