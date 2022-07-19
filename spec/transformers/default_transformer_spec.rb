@@ -1,7 +1,7 @@
-require 'default_processor'
 require 'set'
+require 'transformers/default_transformer'
 
-describe DefaultProcessor do
+describe Transformers::DefaultTransformer do
   let(:log_file) { './spec/fixtures/webserver.log' }
 
   let(:all_processed_log) do

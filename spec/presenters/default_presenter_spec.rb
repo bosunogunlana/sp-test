@@ -1,7 +1,7 @@
 require 'set'
-require 'default_presenter'
+require 'presenters/default_presenter'
 
-describe DefaultPresenter do
+RSpec.describe Presenters::DefaultPresenter do
   let(:transformed_log_entry) {
     { "/home"=> {
         visit_counts: 78,
@@ -19,12 +19,12 @@ describe DefaultPresenter do
 
   it 'pretty print page visits' do
     page_name, visit_details = transformed_log_entry.to_a.first
-    expect(described_class.pretty_print(page_name: page_name, visit_details: visit_details, type: :all)).to eq('/home 78 visits')
+    expect(described_class.send(:pretty_print, page_name, visit_details, :all)).to eq('/home 78 visits')
   end
 
   it 'pretty print unique views' do
     page_name, visit_details = transformed_log_entry.to_a.first
-    expect(described_class.pretty_print(page_name: page_name, visit_details: visit_details, type: :unique)).to eq('/home 2 unique views')
+    expect(described_class.send(:pretty_print, page_name, visit_details, :unique)).to eq('/home 2 unique views')
   end
 
   it 'formats outputs correctly' do
