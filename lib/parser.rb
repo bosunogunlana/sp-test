@@ -4,14 +4,14 @@ require_relative 'presenters/default_presenter'
 class Parser
   class InvalidArgumentError < StandardError; end
 
-  attr_accessor :filename, :processor, :presenter
+  attr_accessor :filename, :transformer, :presenter
 
-  def initialize(filename, processor: Transformers::DefaultTransformer, presenter: Presenters::DefaultPresenter)
+  def initialize(filename, transformer: Transformers::DefaultTransformer, presenter: Presenters::DefaultPresenter)
     raise InvalidArgumentError, 'please provide a valid log file' if filename.nil?
     raise InvalidArgumentError, 'log file does not exist' unless File.exist?(filename)
 
     @filename = filename
-    @processor = processor
+    @transformer = transformer
     @presenter = presenter
   end
 
@@ -26,7 +26,7 @@ class Parser
   private
 
   def call(call_type:)
-    transformed_log = processor.call(filename, type: call_type)
+    transformed_log = transformer.call(filename, type: call_type)
     presenter.call(log_entries: transformed_log, type: call_type)
   end
 end
